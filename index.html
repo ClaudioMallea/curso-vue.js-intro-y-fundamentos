@@ -14,10 +14,12 @@
         Vue.createApp({
             data(){
                 return {
-                    text: "HappyLog"
+                    text: "HappyLog",
+                    sun_img:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDSt7tGRmiehClAlMpzzi1_jbitO5rpackUQ&usqp=CAU"
                 };
             },
-            template: `<div v-text="text"> </div>`
+            template: `<div v-text="text"> </div> 
+                       <img v-bind:src="sun_img" v-bind:alt="sum_img"/> `
 
 
         }).mount("#app");

@@ -22,7 +22,7 @@
                     lastName:"Mallea",
                     open:false,
                     puerta_status:"puerta cerrada",
-                    posts: [{id:1},{id:2},{id:3},{id:4}],
+                    posts: [{id:0},{id:1},{id:2},{id:3}],
                 };
             },
             computed:{
@@ -39,6 +39,11 @@
 
                     this.msg = e.target.value;
                     console.log(e)
+                },
+                remove(id){
+                    
+                    const posts = this.posts.filter(p => p.id != id);
+                    this.posts = posts;
                 }
 
             },
@@ -56,6 +61,7 @@
                 }
             },
             template: `
+                       <v-header>Titulo</v-header>
                        <div v-text="text"> </div> 
                        <p>Hola {{fullName}}</p>
                        <img :src="sun_img" :alt="sun_img"/> 
@@ -63,18 +69,30 @@
                        <p>{{msg}}</p>
                        <input type="text" v-model="msg"/>
                        <button @click="open =!open" v-text="puerta_status"  >  </button>
-                       <item v-for="(item,i) in posts" :key="i" :post="item"> </item>
+                       <item v-for="(item,i) in posts" :key="i" :post="item" v-on:remove="remove"> </item>
+                       
                        `
 
 
         })
         app.component("item", {
             props: ["post"],
-            template:`<div class ="item" >
-                            <p>{{post.id}}</p> </div>
+            methods:{
+                rm(id){
+                    this.$emit('remove',id);
+                }
+            },
+            template:`<div class ="item" v-on:click="rm(post.id)" >
+                            <p>{{post.id}}</p> 
                       </div>`
 
         });
+
+        app.component("v-header",{
+            template:`
+                <header><slot></slot></header>`
+
+        })
         const vm = app.mount("#app")
     </script>
 </body>

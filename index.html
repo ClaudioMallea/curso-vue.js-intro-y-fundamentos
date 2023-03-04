@@ -19,7 +19,10 @@
                     counter:0,
                     msg: "Hoy comí helado",
                     firstName:"Claudio",
-                    lastName:"Mallea"
+                    lastName:"Mallea",
+                    open:false,
+                    puerta_status:"puerta cerrada",
+                    posts: [{id:1},{id:2},{id:3},{id:4}],
                 };
             },
             computed:{
@@ -38,13 +41,29 @@
                     console.log(e)
                 }
 
-            }  ,
-            template: `<div v-text="text"> </div> 
+            },
+            watch:{
+                text(){
+                    console.log()
+                },
+                open(value){
+                    if(value){
+                        this.puerta_status = "puerta abierta";
+                    }
+                    else{
+                        this.puerta_status = "puerta cerrada";
+                    }
+                }
+            },
+            template: `
+                       <div v-text="text"> </div> 
                        <p>Hola {{fullName}}</p>
                        <img :src="sun_img" :alt="sun_img"/> 
                        <button @click="increment"> {{counter}} </button>
                        <p>{{msg}}</p>
                        <input type="text" v-model="msg"/>
+                       <button @click="open =!open" v-text="puerta_status"  > </button>
+                       <div v-for="(item,i) in posts" :key="i" >{{item.id}} </div>
                        `
 
 

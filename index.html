@@ -11,7 +11,7 @@
     <div id="app"> </div>
     <script>
         console.log(window.Vue);
-        Vue.createApp({
+        const app = Vue.createApp({
             data(){
                 return {
                     text: "HappyLog",
@@ -62,12 +62,20 @@
                        <button @click="increment"> {{counter}} </button>
                        <p>{{msg}}</p>
                        <input type="text" v-model="msg"/>
-                       <button @click="open =!open" v-text="puerta_status"  > </button>
-                       <div v-for="(item,i) in posts" :key="i" >{{item.id}} </div>
+                       <button @click="open =!open" v-text="puerta_status"  >  </button>
+                       <item v-for="(item,i) in posts" :key="i" :post="item"> </item>
                        `
 
 
-        }).mount("#app");
+        })
+        app.component("item", {
+            props: ["post"],
+            template:`<div class ="item" >
+                            <p>{{post.id}}</p> </div>
+                      </div>`
+
+        });
+        const vm = app.mount("#app")
     </script>
 </body>
 </html>

@@ -24,6 +24,7 @@
                     puerta_status:"puerta cerrada",
                     posts: [{id:0},{id:1},{id:2},{id:3}],
                     texto:"hola vue",
+                    text_deep:"hola",
                 };
             },
             computed:{
@@ -56,6 +57,13 @@
                     }
                 }
             },
+
+            provide(){
+                return {
+                otroTexto:this.text_deep,
+                }
+            },
+
             template: `
                        <v-header>Titulo</v-header>
                        <div v-text="text"> </div> 
@@ -70,6 +78,9 @@
                             <p>{{texto}}</p>
                             <v-input v-model:value="texto" />
                         </div>
+
+                        <div>{{text_deep}}</div>
+                        <otro/>
                        `
 
 
@@ -87,6 +98,17 @@
             template:`<input type="text" :value="value" v-on:input="input" /> `
 
         });
+        app.component("otro",{
+
+            template:`<tercer/>`
+
+        })
+        app.component("tercer", {
+            inject:["otroTexto"],
+            template:`<div>{{otroTexto}}</div>`
+        })
+
+
         app.component("item", {
             props: ["post"],
             methods:{
@@ -101,6 +123,7 @@
         });
 
         app.component("v-header",{
+            
             template:`
                 <header><slot></slot></header>`
 
